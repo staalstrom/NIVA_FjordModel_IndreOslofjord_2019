@@ -1,0 +1,339 @@
+
+#
+# Absoft Developer Tools Interface requires use of this makefile.
+#
+.SHELL: name="cmd.exe"
+MKDIR=if not exist "$(OBJDIR)" mkdir 
+RMDIR=rmdir /S /Q
+
+#
+# Variables for the compiler(s) and linker
+#
+ABSOFT_F95=f95
+ABSOFT_F77=f95
+VAST_PREPROCESSOR=vastfp.exe 
+RC=rc.exe
+CL=cl.exe
+MAKE=amake2
+ABSOFT_F95_LINKER=f95
+DUMMY=
+
+#
+# Flags
+#
+ABSOFT_F95_FLAGS=-Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -s -stack:1024000
+ABSOFT_F77_FLAGS=-Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -f77_compat -ffree -g -m32 -s -stack:1024000
+RC_FLAGS=
+CL_FLAGS= -Zi
+MAKE_FLAGS= -k
+ABSOFT_F95_LINKER_FLAGS=-IPA:debug=on -IPA:source_pu_order=on unix.lib     -stack:1024000 -m32 -g -g
+
+#
+# Name of the executable
+#
+TARGET=NIVA_FjordModel.exe
+OUTDIR=.
+OBJDIR=.\Debug
+
+#
+# Files for this executable
+#
+VAST_PREPROCESSOR_FILES=
+ABSOFT_F95_FILES="F95Code/_MainProgram.f95" "F95Code/m1_InitiatedModel.f95" "F95Code/m2_ProcessDirectives.f95" "F95Code/m4_ModelState.f95" "F95Code/m3_RunModel.f95" "F95Code/m5_TerminateModel.f95" "F95Code/ModelParamToolbox.f95" "F95Code/ModelParam_Boundary.f95" "F95Code/ModelParam_Decomposition.f95" "F95Code/ModelParam_InitState.f95" "F95Code/ModelParam_Inputs.f95" "F95Code/ModelParam_Mussels.f95" "F95Code/ModelParam_Physics.f95" "F95Code/ModelParam_Plankton.f95" "F95Code/ModelParam_RunControl.f95" "F95Code/ModelParam_Topography.f95" "F95Code/ModelParamHandling.f95" "F95Code/ModelVar_Topography.f95" "F95Code/ModelVar_HydroBioChem.f95" "F95Code/ModelVar_RunControl.f95" "F95Code/ModelDimensions.f95" "F95Code/fx_TrhItr.f95" "F95Code/fx_Eigjacob.f95" "F95Code/fx_Eutrosub.f95" "F95Code/fx_Dvzero.f95" "F95Code/fx_Mbalan.f95" "F95Code/fx_Sigmat.f95" "F95Code/fx_Stoichiometry.f95" "F95Code/fx_Surfexch.f95" "F95Code/fx_Transp_h.f95" "F95Code/fx_Transp_u.f95" "F95Code/fx_Transp_v.f95" "F95Code/fx_TrCalc.f95" "F95Code/fx_Surf_mix.f95" "F95Code/fx_Windcurr.f95" "F95Code/fx_Jetmix.f95" "F95Code/fx_Mtrans.f95" "F95Code/sub_InitiateModelState.f95" "F95Code/sub_CalcDerivates.f95" "F95Code/fx_Dgrade.f95" "F95Code/fx_Muslinit.f95" "F95Code/fx_Muslintg.f95" "F95Code/fx_Phyt_zoo.F95" "F95Code/ModelVar_Mussels.f95" "F95Code/fx_OxygSat.f95" "F95Code/sub_TextInput.f95" "F95Code/Code_QA_Procedures.f95" "F95Code/fx_Topogr.F95" "F95Code/fx_Water_Transport.f95" "F95Code/fx_Preliminary_Runoff.F95" "F95Code/fx_Preliminary_Bnd_osl2.f95" "F95Code/m6_FileNames.f95" "F95Code/fx_Randfnct.f95" "F95Code/fx_Rand_Vec.F95" "F95Code/fx_BndTidal.f95" "F95Code/sub_Snapshot.f95" "F95Code/sub_WrtRep.f95" "F95Code/fx_Binary_Results_Write.f95" "F95Code/Binary_Result_IO/Binary_Write_sub.f95" "F95Code/fx_Transp_2.f95" "F95Code/fx_Transp_1.f95" "F95Code/fx_RunControl_DebugPrint.f95" "F95Code/Binary_Result_IO/BinaryFile_ControlVariables.f95"
+ABSOFT_F77_FILES=
+CL_FILES=
+ABSOFT_F95_LINKER_FILES=
+RC_FILES=
+MAKE_FILES=
+
+#
+# Rules and dependencies for the executable
+#
+SRCFILES=$(ABSOFT_F95_FILES)
+OBJFILES="$(OBJDIR)\_MainProgram.obj" "$(OBJDIR)\m1_InitiatedModel.obj" "$(OBJDIR)\m2_ProcessDirectives.obj" "$(OBJDIR)\m4_ModelState.obj" "$(OBJDIR)\m3_RunModel.obj" "$(OBJDIR)\m5_TerminateModel.obj" "$(OBJDIR)\ModelParamToolbox.obj" "$(OBJDIR)\ModelParam_Boundary.obj" "$(OBJDIR)\ModelParam_Decomposition.obj" "$(OBJDIR)\ModelParam_InitState.obj" "$(OBJDIR)\ModelParam_Inputs.obj" "$(OBJDIR)\ModelParam_Mussels.obj" "$(OBJDIR)\ModelParam_Physics.obj" "$(OBJDIR)\ModelParam_Plankton.obj" "$(OBJDIR)\ModelParam_RunControl.obj" "$(OBJDIR)\ModelParam_Topography.obj" "$(OBJDIR)\ModelParamHandling.obj" "$(OBJDIR)\ModelVar_Topography.obj" "$(OBJDIR)\ModelVar_HydroBioChem.obj" "$(OBJDIR)\ModelVar_RunControl.obj" "$(OBJDIR)\ModelDimensions.obj" "$(OBJDIR)\fx_TrhItr.obj" "$(OBJDIR)\fx_Eigjacob.obj" "$(OBJDIR)\fx_Eutrosub.obj" "$(OBJDIR)\fx_Dvzero.obj" "$(OBJDIR)\fx_Mbalan.obj" "$(OBJDIR)\fx_Sigmat.obj" "$(OBJDIR)\fx_Stoichiometry.obj" "$(OBJDIR)\fx_Surfexch.obj" "$(OBJDIR)\fx_Transp_h.obj" "$(OBJDIR)\fx_Transp_u.obj" "$(OBJDIR)\fx_Transp_v.obj" "$(OBJDIR)\fx_TrCalc.obj" "$(OBJDIR)\fx_Surf_mix.obj" "$(OBJDIR)\fx_Windcurr.obj" "$(OBJDIR)\fx_Jetmix.obj" "$(OBJDIR)\fx_Mtrans.obj" "$(OBJDIR)\sub_InitiateModelState.obj" "$(OBJDIR)\sub_CalcDerivates.obj" "$(OBJDIR)\fx_Dgrade.obj" "$(OBJDIR)\fx_Muslinit.obj" "$(OBJDIR)\fx_Muslintg.obj" "$(OBJDIR)\fx_Phyt_zoo.obj" "$(OBJDIR)\ModelVar_Mussels.obj" "$(OBJDIR)\fx_OxygSat.obj" "$(OBJDIR)\sub_TextInput.obj" "$(OBJDIR)\Code_QA_Procedures.obj" "$(OBJDIR)\fx_Topogr.obj" "$(OBJDIR)\fx_Water_Transport.obj" "$(OBJDIR)\fx_Preliminary_Runoff.obj" "$(OBJDIR)\fx_Preliminary_Bnd_osl2.obj" "$(OBJDIR)\m6_FileNames.obj" "$(OBJDIR)\fx_Randfnct.obj" "$(OBJDIR)\fx_Rand_Vec.obj" "$(OBJDIR)\fx_BndTidal.obj" "$(OBJDIR)\sub_Snapshot.obj" "$(OBJDIR)\sub_WrtRep.obj" "$(OBJDIR)\fx_Binary_Results_Write.obj" "$(OBJDIR)\Binary_Write_sub.obj" "$(OBJDIR)\fx_Transp_2.obj" "$(OBJDIR)\fx_Transp_1.obj" "$(OBJDIR)\fx_RunControl_DebugPrint.obj" "$(OBJDIR)\BinaryFile_ControlVariables.obj"
+all: "$(OBJDIR)" "$(OUTDIR)\$(TARGET)"
+	
+
+"$(OUTDIR)\$(TARGET)":  $(OBJFILES) $(ABSOFT_F95_LINKER_FILES) $(MODFILES) $(RC_FILES)
+	$(ABSOFT_F95_LINKER)  $(LPATHS) $(OBJFILES) $(ABSOFT_F95_LINKER_FILES) $(LIBS) -o "$(OUTDIR)\$(TARGET)" $(ABSOFT_F95_LINKER_FLAGS)
+	IF %errorlevel% NEQ 0 EXIT 1
+
+
+
+"$(OBJDIR)\_MainProgram.obj": "F95Code/_MainProgram.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\_MainProgram.obj" "F95Code/_MainProgram.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\m1_InitiatedModel.obj": "F95Code/m1_InitiatedModel.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\m1_InitiatedModel.obj" "F95Code/m1_InitiatedModel.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\m2_ProcessDirectives.obj": "F95Code/m2_ProcessDirectives.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\m2_ProcessDirectives.obj" "F95Code/m2_ProcessDirectives.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\m4_ModelState.obj": "F95Code/m4_ModelState.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\m4_ModelState.obj" "F95Code/m4_ModelState.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\m3_RunModel.obj": "F95Code/m3_RunModel.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\m3_RunModel.obj" "F95Code/m3_RunModel.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\m5_TerminateModel.obj": "F95Code/m5_TerminateModel.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\m5_TerminateModel.obj" "F95Code/m5_TerminateModel.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParamToolbox.obj": "F95Code/ModelParamToolbox.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParamToolbox.obj" "F95Code/ModelParamToolbox.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParam_Boundary.obj": "F95Code/ModelParam_Boundary.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParam_Boundary.obj" "F95Code/ModelParam_Boundary.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParam_Decomposition.obj": "F95Code/ModelParam_Decomposition.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParam_Decomposition.obj" "F95Code/ModelParam_Decomposition.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParam_InitState.obj": "F95Code/ModelParam_InitState.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParam_InitState.obj" "F95Code/ModelParam_InitState.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParam_Inputs.obj": "F95Code/ModelParam_Inputs.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParam_Inputs.obj" "F95Code/ModelParam_Inputs.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParam_Mussels.obj": "F95Code/ModelParam_Mussels.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParam_Mussels.obj" "F95Code/ModelParam_Mussels.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParam_Physics.obj": "F95Code/ModelParam_Physics.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParam_Physics.obj" "F95Code/ModelParam_Physics.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParam_Plankton.obj": "F95Code/ModelParam_Plankton.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParam_Plankton.obj" "F95Code/ModelParam_Plankton.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParam_RunControl.obj": "F95Code/ModelParam_RunControl.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParam_RunControl.obj" "F95Code/ModelParam_RunControl.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParam_Topography.obj": "F95Code/ModelParam_Topography.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParam_Topography.obj" "F95Code/ModelParam_Topography.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelParamHandling.obj": "F95Code/ModelParamHandling.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelParamHandling.obj" "F95Code/ModelParamHandling.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelVar_Topography.obj": "F95Code/ModelVar_Topography.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelVar_Topography.obj" "F95Code/ModelVar_Topography.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelVar_HydroBioChem.obj": "F95Code/ModelVar_HydroBioChem.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelVar_HydroBioChem.obj" "F95Code/ModelVar_HydroBioChem.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelVar_RunControl.obj": "F95Code/ModelVar_RunControl.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelVar_RunControl.obj" "F95Code/ModelVar_RunControl.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelDimensions.obj": "F95Code/ModelDimensions.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelDimensions.obj" "F95Code/ModelDimensions.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_TrhItr.obj": "F95Code/fx_TrhItr.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_TrhItr.obj" "F95Code/fx_TrhItr.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Eigjacob.obj": "F95Code/fx_Eigjacob.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Eigjacob.obj" "F95Code/fx_Eigjacob.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Eutrosub.obj": "F95Code/fx_Eutrosub.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Eutrosub.obj" "F95Code/fx_Eutrosub.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Dvzero.obj": "F95Code/fx_Dvzero.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Dvzero.obj" "F95Code/fx_Dvzero.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Mbalan.obj": "F95Code/fx_Mbalan.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Mbalan.obj" "F95Code/fx_Mbalan.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Sigmat.obj": "F95Code/fx_Sigmat.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Sigmat.obj" "F95Code/fx_Sigmat.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Stoichiometry.obj": "F95Code/fx_Stoichiometry.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Stoichiometry.obj" "F95Code/fx_Stoichiometry.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Surfexch.obj": "F95Code/fx_Surfexch.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Surfexch.obj" "F95Code/fx_Surfexch.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Transp_h.obj": "F95Code/fx_Transp_h.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Transp_h.obj" "F95Code/fx_Transp_h.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Transp_u.obj": "F95Code/fx_Transp_u.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Transp_u.obj" "F95Code/fx_Transp_u.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Transp_v.obj": "F95Code/fx_Transp_v.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Transp_v.obj" "F95Code/fx_Transp_v.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_TrCalc.obj": "F95Code/fx_TrCalc.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_TrCalc.obj" "F95Code/fx_TrCalc.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Surf_mix.obj": "F95Code/fx_Surf_mix.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Surf_mix.obj" "F95Code/fx_Surf_mix.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Windcurr.obj": "F95Code/fx_Windcurr.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Windcurr.obj" "F95Code/fx_Windcurr.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Jetmix.obj": "F95Code/fx_Jetmix.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Jetmix.obj" "F95Code/fx_Jetmix.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Mtrans.obj": "F95Code/fx_Mtrans.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Mtrans.obj" "F95Code/fx_Mtrans.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\sub_InitiateModelState.obj": "F95Code/sub_InitiateModelState.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\sub_InitiateModelState.obj" "F95Code/sub_InitiateModelState.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\sub_CalcDerivates.obj": "F95Code/sub_CalcDerivates.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\sub_CalcDerivates.obj" "F95Code/sub_CalcDerivates.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Dgrade.obj": "F95Code/fx_Dgrade.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Dgrade.obj" "F95Code/fx_Dgrade.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Muslinit.obj": "F95Code/fx_Muslinit.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Muslinit.obj" "F95Code/fx_Muslinit.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Muslintg.obj": "F95Code/fx_Muslintg.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Muslintg.obj" "F95Code/fx_Muslintg.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Phyt_zoo.obj": "F95Code/fx_Phyt_zoo.F95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Phyt_zoo.obj" "F95Code/fx_Phyt_zoo.F95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\ModelVar_Mussels.obj": "F95Code/ModelVar_Mussels.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\ModelVar_Mussels.obj" "F95Code/ModelVar_Mussels.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_OxygSat.obj": "F95Code/fx_OxygSat.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_OxygSat.obj" "F95Code/fx_OxygSat.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\sub_TextInput.obj": "F95Code/sub_TextInput.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\sub_TextInput.obj" "F95Code/sub_TextInput.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\Code_QA_Procedures.obj": "F95Code/Code_QA_Procedures.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\Code_QA_Procedures.obj" "F95Code/Code_QA_Procedures.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Topogr.obj": "F95Code/fx_Topogr.F95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Topogr.obj" "F95Code/fx_Topogr.F95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Water_Transport.obj": "F95Code/fx_Water_Transport.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Water_Transport.obj" "F95Code/fx_Water_Transport.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Preliminary_Runoff.obj": "F95Code/fx_Preliminary_Runoff.F95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Preliminary_Runoff.obj" "F95Code/fx_Preliminary_Runoff.F95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Preliminary_Bnd_osl2.obj": "F95Code/fx_Preliminary_Bnd_osl2.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Preliminary_Bnd_osl2.obj" "F95Code/fx_Preliminary_Bnd_osl2.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\m6_FileNames.obj": "F95Code/m6_FileNames.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\m6_FileNames.obj" "F95Code/m6_FileNames.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Randfnct.obj": "F95Code/fx_Randfnct.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Randfnct.obj" "F95Code/fx_Randfnct.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Rand_Vec.obj": "F95Code/fx_Rand_Vec.F95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Rand_Vec.obj" "F95Code/fx_Rand_Vec.F95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_BndTidal.obj": "F95Code/fx_BndTidal.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_BndTidal.obj" "F95Code/fx_BndTidal.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\sub_Snapshot.obj": "F95Code/sub_Snapshot.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\sub_Snapshot.obj" "F95Code/sub_Snapshot.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\sub_WrtRep.obj": "F95Code/sub_WrtRep.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\sub_WrtRep.obj" "F95Code/sub_WrtRep.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Binary_Results_Write.obj": "F95Code/fx_Binary_Results_Write.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Binary_Results_Write.obj" "F95Code/fx_Binary_Results_Write.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\Binary_Write_sub.obj": "F95Code/Binary_Result_IO/Binary_Write_sub.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -stack:1024000 -o "$(OBJDIR)\Binary_Write_sub.obj" "F95Code/Binary_Result_IO/Binary_Write_sub.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Transp_2.obj": "F95Code/fx_Transp_2.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Transp_2.obj" "F95Code/fx_Transp_2.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_Transp_1.obj": "F95Code/fx_Transp_1.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_Transp_1.obj" "F95Code/fx_Transp_1.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\fx_RunControl_DebugPrint.obj": "F95Code/fx_RunControl_DebugPrint.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffixed -g -m32 -stack:1024000 -o "$(OBJDIR)\fx_RunControl_DebugPrint.obj" "F95Code/fx_RunControl_DebugPrint.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)\BinaryFile_ControlVariables.obj": "F95Code/Binary_Result_IO/BinaryFile_ControlVariables.f95"
+	$(ABSOFT_F95) -c -nowdir -YLOOP_ANALYZER -LNO:simd_verbose=on -LNO:apo_verbose=on -CG:filetable_verbose=on $(ABSOFT_F95_FLAGS) -o "$(OBJDIR)\BinaryFile_ControlVariables.obj" "F95Code/Binary_Result_IO/BinaryFile_ControlVariables.f95"
+	IF %errorlevel% NEQ 0 EXIT 1
+
+"$(OBJDIR)":
+	$(MKDIR) "$(OBJDIR)"
+#
+# Clean Rules
+#
+clean:
+	 if exist "$(OBJDIR)" $(RMDIR) "$(OBJDIR)" 
+	 if exist "$(TARGET)" erase "$(TARGET)"
+	 if exist "NIVA_FjordModel.pdb" erase "NIVA_FjordModel.pdb"
+
+#
+# Define necessary macros for dependency scanning.
+#
+MKDEP=amakedepend
+MKDEP_FLAGS= -quiet "-pre$(OBJDIR)\"\" -Y -modInfo -errdel -f90 -f makefile.amake
+#
+# Generate dependencies for the project
+#
+ScanAll: "$(OUTDIR)" "$(OBJDIR)" MakeDepsAll
+
+#
+# Scan for all F77/F95, and c/c++ dependencies
+#
+MakeDepsAll:
+	$(MKDEP) -quiet "-pre.\Debug\\" -Y -modInfo -errdel -f90 -f makefile.amake -a -info -Rb -Rp -W132 -YCOM_NAMES=UCS -YVAR_NAMES=UCS -ffree -g -m32 -s -stack:1024000 -info "F95Code\_MainProgram.f95" "F95Code\m1_InitiatedModel.f95" "F95Code\m2_ProcessDirectives.f95" "F95Code\m4_ModelState.f95" "F95Code\m3_RunModel.f95" "F95Code\m5_TerminateModel.f95" "F95Code\ModelParamToolbox.f95" "F95Code\ModelParam_Boundary.f95" "F95Code\ModelParam_Decomposition.f95" "F95Code\ModelParam_InitState.f95" "F95Code\ModelParam_Inputs.f95" "F95Code\ModelParam_Mussels.f95" "F95Code\ModelParam_Physics.f95" "F95Code\ModelParam_Plankton.f95" "F95Code\ModelParam_RunControl.f95" "F95Code\ModelParam_Topography.f95" "F95Code\ModelParamHandling.f95" "F95Code\ModelVar_Topography.f95" "F95Code\ModelVar_HydroBioChem.f95" "F95Code\ModelVar_RunControl.f95" "F95Code\ModelDimensions.f95" "F95Code\fx_TrhItr.f95" "F95Code\fx_Eigjacob.f95" "F95Code\fx_Eutrosub.f95" "F95Code\fx_Dvzero.f95" "F95Code\fx_Mbalan.f95" "F95Code\fx_Sigmat.f95" "F95Code\fx_Stoichiometry.f95" "F95Code\fx_Surfexch.f95" "F95Code\fx_Transp_h.f95" "F95Code\fx_Transp_u.f95" "F95Code\fx_Transp_v.f95" "F95Code\fx_TrCalc.f95" "F95Code\fx_Surf_mix.f95" "F95Code\fx_Windcurr.f95" "F95Code\fx_Jetmix.f95" "F95Code\fx_Mtrans.f95" "F95Code\sub_InitiateModelState.f95" "F95Code\sub_CalcDerivates.f95" "F95Code\fx_Dgrade.f95" "F95Code\fx_Muslinit.f95" "F95Code\fx_Muslintg.f95" "F95Code\fx_Phyt_zoo.F95" "F95Code\ModelVar_Mussels.f95" "F95Code\fx_OxygSat.f95" "F95Code\sub_TextInput.f95" "F95Code\Code_QA_Procedures.f95" "F95Code\fx_Topogr.F95" "F95Code\fx_Water_Transport.f95" "F95Code\fx_Preliminary_Runoff.F95" "F95Code\fx_Preliminary_Bnd_osl2.f95" "F95Code\m6_FileNames.f95" "F95Code\fx_Randfnct.f95" "F95Code\fx_Rand_Vec.F95" "F95Code\fx_BndTidal.f95" "F95Code\sub_Snapshot.f95" "F95Code\sub_WrtRep.f95" "F95Code\fx_Binary_Results_Write.f95" "F95Code\Binary_Result_IO\Binary_Write_sub.f95" "F95Code\fx_Transp_2.f95" "F95Code\fx_Transp_1.f95" "F95Code\fx_RunControl_DebugPrint.f95" "F95Code\Binary_Result_IO\BinaryFile_ControlVariables.f95" 
