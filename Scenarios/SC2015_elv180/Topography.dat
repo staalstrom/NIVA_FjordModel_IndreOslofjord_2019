@@ -1,0 +1,351 @@
+BASINS
+# Created 21.10.2019 by Andre Staalstrom (ans@niva.no)
+# 1. Bunnefjorden
+# 2. Lysakerfjorden
+# 3. Vestfjorden
+# 4. Bunnebotten
+# 5. Bekkelagsbassenget
+# 6. Oslo Havn
+# 7. Bærumsbassenget
+# 8. Holmenfjorden
+# 9. SteileneNord
+
+
+# Description of basin topography:
+# NAME
+# Length of coastline
+# Table:               Depth Area [*F]
+#                      ...
+# ends with            <Max depth> 0
+#                      END
+# The factor *F is multiplied with the area to get unit m2,
+# the same factor is used for all lines in the table
+
+# ==============================
+# ------------------ Basseng 1
+BUNNEFJORDEN
+# utenom Bekkelagsbassenget, havnebassenget og Bunnebotten
+# strandlinje  (m)
+80.0E3
+#  DYP,   AREAL   (FAKTOR I FORSTE LINJE GJELDER VIDERE NEDOVER)
+0  50.734   *1.0E+6
+10  45.714
+20  40.541
+30  35.378
+39  31.738
+40  31.356
+50  27.037
+60  21.084
+70  17.039
+75  15.154
+80  13.697
+90  11.577
+100  9.314
+110  6.216
+120  3.783
+130  2.330
+140  1.397
+150  0.413
+155  0.000
+END
+
+# ------------------ Basseng 2
+LYSAKERFJORDEN
+15.0E3
+0  7.536   *1.0E6
+10  6.123
+20  5.261
+30  4.043
+40  3.259
+50  2.463
+60  1.262
+70  0.525
+80  0.017
+END
+
+# ------------------ Basseng 3
+VESTFJORDEN
+# uten Bærumsbassenget, Holmenfjorden og Steilene Nord 
+# inkl. Gråyrenna og Håøya Vest
+# strandlinje korrigert med det som er tatt med fra Bærumsbassenget
+242.0E3
+0   109.90   *1.0E+6
+10  98.97
+20  86.40
+30  72.50
+40  63.58
+50  50.37
+60  34.50
+70  26.27
+80  21.32
+90  17.35
+100  11.60
+110  5.09
+120  2.20
+130  0.76
+140  0.24
+150  0.02
+160  0.00
+END
+
+# ------------------ Basseng 4
+BUNNEBOTTEN
+7.9E3
+0  0.955 *1.0E6
+10  0.562
+20  0.186
+30  0.009
+END
+
+# ------------------ Basseng 5
+BEKKELAGSBASSENGET
+20.0E3
+0  6.804   *1.0E6
+10  5.473
+20  4.647
+30  3.994
+39  3.423
+40  3.340
+50  2.267
+60  1.089
+70  0.305
+75  0.000
+END
+
+# ------------------ Basseng 6
+OSLOHAVN
+30.0E3
+0   5.843   *1.0E6
+2   5.150
+5   4.671
+10  3.670
+15  2.941
+20  1.990
+23  1.120
+25  0.316
+27  0.026
+28  0.0044
+29  0.0006
+30  0.0000
+END
+
+# ------------------ Basseng 7
+BÆRUMSBASSENGET
+# Strandlinje bare  anslått, ikke målt 
+# (Bør gjøres med smame prosedyre som de andre, 
+#   ved bruk av fraktalgeometri)
+40.0E3
+0  8.581 *1.0E6
+10  3.470
+20  0.906
+30  0.002
+END
+
+# ------------------ Basin 8
+HOLMENFJORDEN
+11.5E3
+0  4.575 *1.0E6
+10  2.674
+20  1.336
+30  0.646
+40  0.494
+50  0.319
+60      0
+END
+
+# ------------------ Basseng 9
+STEILENENORD
+6.7E3
+0  3.531 *1.0E6
+10	3.229
+20	2.927
+30	2.625
+40	2.110
+50	1.594
+60	1.363
+70	0.813
+80	0.313
+85	0.000
+END
+
+# ==============================
+BOUNDARY
+# BARE NAVN PÅ YTRE BASSENG:
+YTRE-OSLOFJORD
+
+
+# ==============================
+CONNECTIONS
+
+# 2 BASINNAMES WITH LENGTH OF BUFFERZONE (M), TRANSITIONZONE (M) AND
+#                           TIMECONSTANT (DAYS) FOR MIXING
+#                           BETWEEN BUFFERVOLUME AND THE MAIN BASINVOLUME:
+
+# ------------------- Terskel Fornebu - Nesoddtangen
+LYSAKERFJORDEN         500 200  0.5
+VESTFJORDEN            500 200  0.5
+# alternativ
+#LYSAKERFJORDEN       0  0  1
+#VESTFJORDEN          0  0  1
+#                       har satt tidskonstant ca. = 1 tidevannsperiode
+# alternativt hvis buffer volumer skal settes til 0:
+#BUNNEFJORDEN         0 0 1
+#VESTFJORDEN          0 0 1
+# Vindretning i grader fra basseng A til basseng B
+# 90 fra øst mot vest
+70.0
+# LISTE OVER DYP
+#          + TRANSPORTBREDDE
+#                + BREDDER PÅ BUFFEROMRÅDER i basseng 1 og 2 (M)
+       0    2500    2500   4000
+      20     900     900   2000
+      40     600     600   1200
+      54       0       0      0
+END
+
+# ------------------- 
+BÆRUMSBASSENGET      100  100 0.5
+VESTFJORDEN          100  100 0.5
+# alternativt hvis buffer volumer skal settes til 0:
+#BÆRUMSBASSENGET      0 0 1
+#VESTFJORDEN          0 0 1
+# Vindretning fra Bærumsbassenget til Vestfjorden:
+90.0
+       0     140    140 1000
+      10      80     80  800
+      12       0      0    0
+END
+# lagt inn 10 m bredde på 12 m dyp, regner med flat bunn over et parti i midten av Snarøysundet
+
+# -------------------
+BEKKELAGSBASSENGET   100  100 0.5
+BUNNEFJORDEN         100  100 0.5
+# vindretning fra Bekkelagsbassenget til Bunnefjorden
+70.0
+# Kort buffervolum, samme bredde som åpningen
+   0      2600    2600    2600   
+   5      2385    2385    2385
+  10      2205    2205    2205
+  15      1995    1995    1995
+  18      1710    1710    1710
+  20      1570    1570    1570
+  25      1190    1190    1190
+  30      1050    1050    1050
+  35       425    425     425
+  40        20    425     425
+  41        15    425     425
+  42        10    425     425
+  43         0    0       0
+END
+
+# -------------------
+#OSLOHAVN             100  100 0.5
+#BEKKELAGSBASSENGET   100  100 0.5
+OSLOHAVN             0  0  1
+BEKKELAGSBASSENGET   0  0  1
+# vindretning fra Oslo havn til Bekkelagsbassenget
+0
+# Kort buffervolum, samme bredde som åpningen
+   0    600    600    600
+   5    450    600    600
+  10    360    600    600
+  15    305    600    600
+  18    220    600    600
+  20      0    600    600
+END
+
+# -------------------
+#OSLOHAVN            100  100 0.5
+#BUNNEFJORDEN        100  100 0.5
+OSLOHAVN            0  0  1
+BUNNEFJORDEN        0  0  1
+# vindretning fra Indre Havn til Bunnefjorden (Lysakerfjorden)
+60
+# Kort buffervolum, samme bredde som åpningen
+      0     970    970    970
+      3     860    860    860
+      5     750    750    750
+      6     700    700    700
+      8     565    565    565
+     10     400    400    400
+     12     295    295    295
+     14     165    165    165
+     15     135    135    135
+     18      95    100    100
+     20       0	     0      0
+END
+
+# -------------------
+STEILENENORD       100  100 0.5
+VESTFJORDEN        100  100 0.5
+# vindretning fra Steilene Nord til Vestfjorden
+90
+# Kort buffervolum, samme bredde som åpningen
+0	3760    3760    3760
+20	2700    2700    2700
+30	1640    1640    1640
+40	500     500     500
+50	50      500     500
+END
+
+# ------------------- 
+BUNNEBOTTEN      100  100 0.5
+BUNNEFJORDEN     100  100 0.5
+# alternativt hvis buffer volumer skal settes til 0:
+#BUNNEBOTTEN      0 0 1
+#BUNNEFJORDEN     0 0 1
+# Vindretning fra Bunnebotten til Bunnefjorden:
+180.0
+       0     250    250  500
+      10     160    160  300
+      20       0      0    0
+END
+
+# ------------------- 
+HOLMENFJORDEN     600  300 0.5
+VESTFJORDEN       600  300 0.5
+# alternativt hvis buffer volumer skal settes til 0:
+#HOLMENFJORDEN         0 0 1
+#VESTFJORDEN           0 0 1
+# Vindretning fra Holmenfjorden til Vestfjorden:
+310.0
+       0    1000   1000 2000
+	  10     670    670 1600
+	  20     340    340 1300
+	  30     280    280 1000
+	  40     210    210  800
+	  50     140    140  500
+	  60       0      0    0
+END
+
+# ------------------- Terskel Bygdø - Nesoddtangen
+#BUNNEFJORDEN         500 200  0.5
+#LYSAKERFJORDEN       500 200  0.5
+# Alternativ
+BUNNEFJORDEN         0  0  1
+LYSAKERFJORDEN       0  0  1
+# Vindretning fra Lysakerfjorden til Vestfjorden:
+110.0
+# LISTE OVER DYP
+#          + TRANSPORTBREDDE
+#                + BREDDER PÅ BUFFEROMRÅDER i basseng 1 og 2 (M)
+       0    2500    2500   4000
+      20     900     900   2000
+      40     600     600   1200
+      54       0       0      0
+END
+
+# ------------------- Drøbaksterskelen
+#VESTFJORDEN          5000  1000 2.0
+#YTRE-OSLOFJORD       10000 2000 5.0
+# alternativt hvis buffer volumer skal settes til 0:
+VESTFJORDEN          0 0 1
+YTRE-OSLOFJORD       0 0 1
+# Vindretning fra Vestfjorden til Ytre Oslofjord:
+0.0
+       0    1500    2300  2500
+       2     700    1800  2000
+      10     500    1500  1800
+      19     200    1200  1500
+      20       0       0     0
+END
